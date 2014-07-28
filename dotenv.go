@@ -1,13 +1,15 @@
 package bot
 
 import (
+	"errors"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
 	"strings"
 )
 
-func ParseDotEnv(s string) {
+func parseDotEnv(s string) {
 	lines := strings.Split(s, "\n")
 
 	for i := 0; i < len(lines); i += 1 {
@@ -19,7 +21,7 @@ func ParseDotEnv(s string) {
 		// split it on the first =
 		slices := strings.SplitN(l, "=", 2)
 		if len(slices) < 2 {
-			log.Printf("WARN: invalid dotenv input: %s", l)
+			warn(errorf("WARN: invalid dotenv input: %s", l))
 			continue
 		}
 
@@ -42,9 +44,23 @@ func ParseDotEnvFile(dir string) {
 		return
 	}
 
-	ParseDotEnv(string(data))
+	parseDotEnv(string(data))
 }
 
-func warn(msg string, err error) {
-	log.Printf("WARN: %s: %s", msg, err)
+func warn(err error) {
+	log.Printf("WARN: %s", err)
+}
+
+func errorf(s ...string) error {
+	if len(s) < 1 {
+		return errors.New("")
+	}
+
+	if len(s) == 1 {
+		return errors.New(s[0])
+	}
+
+	base := s[0]
+	args := s[1:]
+	return errors.New(fmt.Sprintf(base, args))
 }

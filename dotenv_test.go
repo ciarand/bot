@@ -1,16 +1,14 @@
-package bot_test
+package bot
 
 import (
 	"os"
 	"testing"
-
-	bot "github.com/ciarand/hipchat-bot"
 )
 
 func TestReadsVanillaDotenvString(t *testing.T) {
 	resetEnv("foo")
 
-	bot.ParseDotEnv("foo=bar")
+	parseDotEnv("foo=bar")
 
 	if os.Getenv("foo") != "bar" {
 		t.Fail()
@@ -20,7 +18,7 @@ func TestReadsVanillaDotenvString(t *testing.T) {
 func TestReadsCommentsInDotenvString(t *testing.T) {
 	resetEnv("foo")
 
-	bot.ParseDotEnv("foo=bar\n#foo=baz")
+	parseDotEnv("foo=bar\n#foo=baz")
 
 	if os.Getenv("foo") != "bar" {
 		t.Fail()
@@ -30,7 +28,7 @@ func TestReadsCommentsInDotenvString(t *testing.T) {
 func TestIgnoresBlankLinesInDotenvString(t *testing.T) {
 	resetEnv("foo")
 
-	bot.ParseDotEnv("foo=baz\n\n\n\nfoo=bar")
+	parseDotEnv("foo=baz\n\n\n\nfoo=bar")
 
 	if os.Getenv("foo") != "bar" {
 		t.Fail()
@@ -40,7 +38,7 @@ func TestIgnoresBlankLinesInDotenvString(t *testing.T) {
 func TestHandlesDoubleQuotedValuesInDotenvString(t *testing.T) {
 	resetEnv("foo")
 
-	bot.ParseDotEnv(`foo="bar"`)
+	parseDotEnv(`foo="bar"`)
 
 	if os.Getenv("foo") != "bar" {
 		t.Fail()
@@ -50,7 +48,7 @@ func TestHandlesDoubleQuotedValuesInDotenvString(t *testing.T) {
 func TestHandlesSingleQuotedValuesInDotenvString(t *testing.T) {
 	resetEnv("foo")
 
-	bot.ParseDotEnv(`foo='bar'`)
+	parseDotEnv(`foo='bar'`)
 
 	if os.Getenv("foo") != "bar" {
 		t.Fail()
@@ -60,7 +58,7 @@ func TestHandlesSingleQuotedValuesInDotenvString(t *testing.T) {
 func TestComplexExampleInDotenvString(t *testing.T) {
 	resetEnv("foo")
 
-	bot.ParseDotEnv("#comments\nfoo=bar\nbaz=\"quotes=equalssigns\"\n\n#blank lines")
+	parseDotEnv("#comments\nfoo=bar\nbaz=\"quotes=equalssigns\"\n\n#blank lines")
 
 	if os.Getenv("foo") != "bar" || os.Getenv("baz") != "quotes=equalssigns" {
 		t.Fail()
@@ -69,13 +67,13 @@ func TestComplexExampleInDotenvString(t *testing.T) {
 
 func TestSilentlyFailsIfNoFileExists(t *testing.T) {
 	// this shouldn't fail or do anything with errors or whatever
-	bot.ParseDotEnvFile("./dir_doesnt_exist")
+	ParseDotEnvFile("./dir_doesnt_exist")
 }
 
 func TestParsesDotEnvFileIfExists(t *testing.T) {
 	resetEnv("foo", "baz")
 
-	bot.ParseDotEnvFile("./fixtures")
+	ParseDotEnvFile("./fixtures")
 
 	if os.Getenv("foo") != "bar" || os.Getenv("baz") != "quotes=equalssigns" {
 		t.Fail()
