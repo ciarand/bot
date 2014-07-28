@@ -1,0 +1,9 @@
+Hipchat-bot
+===========
+
+[quote]
+A simple HipChat bot.
+
+License
+-------
+BSD, see the `LICENSE` file if you're into that sort of thing.
