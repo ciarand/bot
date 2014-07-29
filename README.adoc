@@ -4,6 +4,9 @@ Hipchat-bot
 [quote]
 A simple HipChat bot.
 
+image:https://drone.io/github.com/ciarand/bot/status.png[
+    "Build Status", link="https://drone.io/github.com/ciarand/bot/latest"]
+
 Getting started
 ---------------
 
