@@ -55,6 +55,16 @@ func TestHandlesSingleQuotedValuesInDotenvString(t *testing.T) {
 	}
 }
 
+func TestIgnoresBrokenLinesInDotenvString(t *testing.T) {
+	resetEnv("foo")
+
+	parseDotEnv("foo=\nbar")
+
+	if os.Getenv("foo") == "bar" {
+		t.Fail()
+	}
+}
+
 func TestComplexExampleInDotenvString(t *testing.T) {
 	resetEnv("foo")
 

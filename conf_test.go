@@ -6,17 +6,17 @@ import (
 )
 
 func TestMergeConfig(t *testing.T) {
-	first := &config{
+	first := config{
 		Username:    "foo",
 		RoomId:      "0000000",
 		FullName:    "name1",
 		MentionName: "mentionname1",
 	}
 
-	second := &config{
+	second := config{
 		Username:    "bar",
 		RoomId:      "1111111",
-		FullName:    "",
+		FullName:    "name2",
 		MentionName: "mentionname2",
 	}
 
@@ -24,8 +24,17 @@ func TestMergeConfig(t *testing.T) {
 
 	if final.Username != "bar" ||
 		final.RoomId != "1111111" ||
-		final.FullName != "name1" ||
+		final.FullName != "name2" ||
 		final.MentionName != "mentionname2" {
+		t.Fail()
+	}
+
+	ulti := final.mergeWith(first)
+
+	if ulti.Username != "foo" ||
+		ulti.RoomId != "0000000" ||
+		ulti.FullName != "name1" ||
+		ulti.MentionName != "mentionname1" {
 		t.Fail()
 	}
 }
@@ -63,7 +72,7 @@ var perms = []struct {
 	}, "missing mention name"},
 }
 
-func testValidateConfig(t *testing.T) {
+func TestValidateConfig(t *testing.T) {
 	for _, p := range perms {
 		err := p.c.validate()
 
@@ -74,5 +83,18 @@ func testValidateConfig(t *testing.T) {
 		if !strings.HasPrefix(err.Error(), p.prefix) {
 			t.Errorf("missing prefix")
 		}
+	}
+
+	// finally validate a correct one
+	correct := &config{
+		Username:    "foo",
+		RoomId:      "0000000",
+		FullName:    "name1",
+		MentionName: "mentionname1",
+	}
+
+	err := correct.validate()
+	if err != nil {
+		t.Errorf("failed to validate correct config")
 	}
 }

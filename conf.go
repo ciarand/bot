@@ -1,9 +1,6 @@
 package bot
 
-import (
-	"errors"
-	"fmt"
-)
+import "errors"
 
 type config struct {
 	Username    string
@@ -12,7 +9,7 @@ type config struct {
 	MentionName string
 }
 
-func (base *config) mergeWith(diff *config) *config {
+func (base config) mergeWith(diff config) config {
 	fin := base
 
 	if diff.Username != "" {
@@ -30,8 +27,6 @@ func (base *config) mergeWith(diff *config) *config {
 	if diff.MentionName != "" {
 		fin.MentionName = diff.MentionName
 	}
-
-	fmt.Print(fin)
 
 	return fin
 }
