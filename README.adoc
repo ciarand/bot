@@ -25,8 +25,8 @@ Specifically it needs the connection:
 - Mention name
 
 [NOTE]
-The mention name doesn't have to match what HipChat thinks it is but since the
-client provides mention completion it's probably a good idea.
+The mention name doesn't have to match what HipChat thinks it is. But, since the
+client provides mention-completion, it's probably a good idea.
 
 Using environmental variables
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -42,7 +42,7 @@ HIPCHAT_MENTION_NAME
 Using a .env file
 ^^^^^^^^^^^^^^^^^
 To help you in making the configuration easier the bot parses and interprets
-a `.env` file, that looks like a very simple shell env file:
+a `.env` file that looks like a very simple shell env file:
 
 ----
 HIPCHAT_USERNAME=00000_0000000
