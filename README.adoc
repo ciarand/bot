@@ -4,6 +4,62 @@ Hipchat-bot
 [quote]
 A simple HipChat bot.
 
+Getting started
+---------------
+
+Configuration
+~~~~~~~~~~~~~
+The bot requires a certain amount of basic configuration.
+
+Specifically it needs the connection:
+
+- Username (XMPP, not your regular HipChat username)
+
+- Room ID (or "all" if that's your thing)
+
+- Full name (needs to be lowercase and *exactly* match your HipChat account settings)
+
+- Mention name
+
+[NOTE]
+The mention name doesn't have to match what HipChat thinks it is but since the
+client provides mention completion it's probably a good idea.
+
+Using environmental variables
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+You can configure the bot via environment variables. They look like this:
+
+----
+HIPCHAT_USERNAME
+HIPCHAT_ROOM_ID
+HIPCHAT_FULL_NAME
+HIPCHAT_MENTION_NAME
+----
+
+Using a .env file
+^^^^^^^^^^^^^^^^^
+To help you in making the configuration easier the bot parses and interprets
+a `.env` file, that looks like a very simple shell env file:
+
+----
+HIPCHAT_USERNAME=00000_0000000
+HIPCHAT_ROOM_ID=00000_my_cool_room@conf.hipchat.com
+HIPCHAT_FULL_NAME=mr roboto
+HIPCHAT_MENTION_NAME=roboto
+----
+
+Using command line params
+^^^^^^^^^^^^^^^^^^^^^^^^^
+You can also specify these via command line parameters. Something like this
+should work:
+
+----
+bot -username 00000_0000000 \
+    -room 00000_my_cool_room@conf.hipchat.com \
+    -full_name "mr roboto" \
+    -mention_name "roboto"
+----
+
 License
 -------
 BSD, see the `LICENSE` file if you're into that sort of thing.
