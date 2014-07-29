@@ -2,10 +2,18 @@ Hipchat-bot
 ===========
 
 [quote]
-A simple HipChat bot.
+A simple HipChat bot
 
 image:https://drone.io/github.com/ciarand/bot/status.png[
     "Build Status", link="https://drone.io/github.com/ciarand/bot/latest"]
+
+What does it do?
+----------------
+Nothing right now.
+
+What will it do?
+----------------
+Lots of cool stuff!
 
 Getting started
 ---------------
