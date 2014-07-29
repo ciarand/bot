@@ -2,7 +2,6 @@ package bot
 
 import (
 	"io/ioutil"
-	"log"
 	"os"
 	"strings"
 )
@@ -19,7 +18,6 @@ func parseDotEnv(s string) {
 		// split it on the first =
 		slices := strings.SplitN(l, "=", 2)
 		if len(slices) < 2 {
-			log.Printf("WARN: invalid dotenv input: %s", l)
 			continue
 		}
 
