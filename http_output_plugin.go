@@ -4,13 +4,11 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-
-	"github.com/ciarand/bot"
 )
 
 func HttpOutputPlugin(url string) handler {
 
-	return func(msg bot.Message, c *bot.Client) {
+	return func(msg Message, c *Client) {
 		resp, err := http.Get(url)
 		if err != nil {
 			c.Send(fmt.Sprintf("couldn't retrieve page: %s", err.Error()))
