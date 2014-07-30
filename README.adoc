@@ -76,6 +76,41 @@ bot -username 00000_0000000 \
     -mention_name "roboto"
 ----
 
+Usage
+-----
+For now something like this will work:
+
+[source,go]
+.bot.go
+----
+package main
+
+import (
+	"flag"
+	"log"
+	"regexp"
+
+	"github.com/ciarand/bot"
+)
+
+func main() {
+	c := bot.NewClient(bot.ConfFromDotConf(".").MergeWith(
+		bot.ConfFromEnv(),
+		bot.ConfFromFlags(flag.Args()),
+	))
+
+	c.RegisterHandler(regexp.MustCompile("^zen$"),
+		bot.HttpOutputPlugin("https://api.github.com/zen"))
+
+	if err := c.Connect(); err != nil {
+		log.Fatalf("Couldn't connect to HipChat server:", err)
+	}
+
+	log.Fatal(c.Run())
+}
+----
+
+
 License
 -------
 BSD, see the `LICENSE` file if you're into that sort of thing.
