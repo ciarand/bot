@@ -1,8 +1,8 @@
-Hipchat-bot
-===========
+bot
+===
 
 [quote]
-A simple HipChat bot
+A chat bot
 
 image:https://drone.io/github.com/ciarand/bot/status.png[
     "Build Status", link="https://drone.io/github.com/ciarand/bot/latest"]
@@ -11,11 +11,14 @@ image:https://img.shields.io/coveralls/ciarand/bot.svg?style=flat[
 
 What does it do?
 ----------------
-Nothing right now.
+Very little right now. It can connect to HipChat via XMPP and handle incoming
+messages using the Go stdlib's regexp package for matching. An
+`HttpOutputPlugin` that sends the output of a GET request to the provided URL
+is currently available.
 
 What will it do?
 ----------------
-Lots of cool stuff!
+Lots of cool stuff! See the planned features below.
 
 Getting started
 ---------------
