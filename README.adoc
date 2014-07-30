@@ -50,10 +50,10 @@ HIPCHAT_FULL_NAME
 HIPCHAT_MENTION_NAME
 ----
 
-Using a .env file
-^^^^^^^^^^^^^^^^^
+Using a .conf file
+^^^^^^^^^^^^^^^^^^
 To help you in making the configuration easier the bot parses and interprets
-a `.env` file that looks like a very simple shell env file:
+a `.conf` file that looks like a very simple shell env file:
 
 ----
 HIPCHAT_USERNAME=00000_0000000
