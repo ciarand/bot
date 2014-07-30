@@ -30,14 +30,14 @@ func TestHandlers(t *testing.T) {
 
 	done := make(chan bool, 1)
 
-	handler := func(c *client) {
+	handler := func(msg *Message, c *Client) {
 		done <- true
 	}
 
 	re := regexp.MustCompile("roboto")
 
 	cli.RegisterHandler(re, handler)
-	cli.handleMessage("roboto zen")
+	cli.handleMessage(&Message{Body: "roboto zen"})
 
 	select {
 	case <-done:
@@ -48,7 +48,7 @@ func TestHandlers(t *testing.T) {
 	}
 }
 
-func acceptableClient() *client {
+func acceptableClient() *Client {
 	return NewClient(&config{
 		Username:    "77027_1062884",
 		RoomId:      "77027_developers@conf.hipchat.com",

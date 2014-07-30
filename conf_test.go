@@ -9,6 +9,7 @@ import (
 func TestMergeConfig(t *testing.T) {
 	foo := &config{
 		Username:    "foo",
+		Password:    "supersecret",
 		RoomId:      "0000000",
 		FullName:    "name1",
 		MentionName: "mentionname1",
@@ -27,6 +28,7 @@ func TestMergeConfig(t *testing.T) {
 	assertSame(t, final.RoomId, "1111111")
 	assertSame(t, final.FullName, "name2")
 	assertSame(t, final.MentionName, "mentionname2")
+	assertSame(t, final.Password, "supersecret")
 
 	ulti := bar.MergeWith(foo)
 
@@ -34,6 +36,7 @@ func TestMergeConfig(t *testing.T) {
 	assertSame(t, ulti.RoomId, "0000000")
 	assertSame(t, ulti.FullName, "name1")
 	assertSame(t, ulti.MentionName, "mentionname1")
+	assertSame(t, ulti.Password, "supersecret")
 }
 
 var confPerms = []struct {
@@ -42,6 +45,7 @@ var confPerms = []struct {
 }{
 	{config{
 		Username:    "bar",
+		Password:    "secret",
 		RoomId:      "1111111",
 		FullName:    "",
 		MentionName: "mentionname2",
@@ -49,6 +53,7 @@ var confPerms = []struct {
 
 	{config{
 		Username:    "",
+		Password:    "secret",
 		RoomId:      "1111111",
 		FullName:    "",
 		MentionName: "mentionname2",
@@ -56,6 +61,7 @@ var confPerms = []struct {
 
 	{config{
 		Username:    "bar",
+		Password:    "secret",
 		RoomId:      "",
 		FullName:    "",
 		MentionName: "mentionname2",
@@ -63,10 +69,19 @@ var confPerms = []struct {
 
 	{config{
 		Username:    "bar",
+		Password:    "secret",
 		RoomId:      "1111111",
 		FullName:    "asjdksadsa",
 		MentionName: "",
 	}, "missing mention name"},
+
+	{config{
+		Username:    "bar",
+		Password:    "",
+		RoomId:      "1111111",
+		FullName:    "asjdksadsa",
+		MentionName: "blah",
+	}, "missing password"},
 }
 
 func TestValidateConfig(t *testing.T) {
@@ -75,16 +90,15 @@ func TestValidateConfig(t *testing.T) {
 
 		if err == nil {
 			t.Errorf("no error returned for %s", p.prefix)
-		}
-
-		if !strings.HasPrefix(err.Error(), p.prefix) {
-			t.Errorf("missing prefix")
+		} else if !strings.HasPrefix(err.Error(), p.prefix) {
+			t.Errorf("missing prefix: %s", p.prefix)
 		}
 	}
 
 	// finally validate a correct one
 	correct := &config{
 		Username:    "foo",
+		Password:    "secret",
 		RoomId:      "0000000",
 		FullName:    "name1",
 		MentionName: "mentionname1",
@@ -103,6 +117,7 @@ var setFromVarPerms = []struct {
 }{
 	{"HIPCHAT_USERNAME", nil, "foo"},
 	{"HIPCHAT_USERNAME", nil, "bar"},
+	{"HIPCHAT_PASSWORD", nil, "foo"},
 	{"HIPCHAT_ROOM_ID", nil, "foo"},
 	{"HIPCHAT_FULL_NAME", nil, "foo"},
 	{"HIPCHAT_MENTION_NAME", nil, "foo"},
@@ -130,6 +145,9 @@ func TestSetFromVar(t *testing.T) {
 			switch tt.key {
 			case "HIPCHAT_USERNAME":
 				assertSame(t, c.Username, tt.val)
+				break
+			case "HIPCHAT_PASSWORD":
+				assertSame(t, c.Password, tt.val)
 				break
 			case "HIPCHAT_ROOM_ID":
 				assertSame(t, c.RoomId, tt.val)

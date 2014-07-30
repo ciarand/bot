@@ -44,6 +44,7 @@ You can configure the bot via environment variables. They look like this:
 
 ----
 HIPCHAT_USERNAME
+HIPCHAT_PASSWORD
 HIPCHAT_ROOM_ID
 HIPCHAT_FULL_NAME
 HIPCHAT_MENTION_NAME
@@ -56,6 +57,7 @@ a `.conf` file that looks like a very simple shell env file:
 
 ----
 HIPCHAT_USERNAME=00000_0000000
+HIPCHAT_PASSWORD=super secret
 HIPCHAT_ROOM_ID=00000_my_cool_room@conf.hipchat.com
 HIPCHAT_FULL_NAME=mr roboto
 HIPCHAT_MENTION_NAME=roboto
@@ -68,6 +70,7 @@ should work:
 
 ----
 bot -username 00000_0000000 \
+    -password "super sekrit" \
     -room 00000_my_cool_room@conf.hipchat.com \
     -full_name "mr roboto" \
     -mention_name "roboto"

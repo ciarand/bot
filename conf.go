@@ -7,6 +7,7 @@ import (
 
 type config struct {
 	Username    string
+	Password    string
 	RoomId      string
 	FullName    string
 	MentionName string
@@ -15,6 +16,7 @@ type config struct {
 func (base *config) MergeWith(merges ...*config) *config {
 	fin := &config{
 		Username:    base.Username,
+		Password:    base.Password,
 		RoomId:      base.RoomId,
 		FullName:    base.FullName,
 		MentionName: base.MentionName,
@@ -23,6 +25,10 @@ func (base *config) MergeWith(merges ...*config) *config {
 	for _, diff := range merges {
 		if diff.Username != "" {
 			fin.Username = diff.Username
+		}
+
+		if diff.Password != "" {
+			fin.Password = diff.Password
 		}
 
 		if diff.RoomId != "" {
@@ -46,6 +52,10 @@ func (c *config) validate() error {
 		return errors.New("missing username")
 	}
 
+	if c.Password == "" {
+		return errors.New("missing password")
+	}
+
 	if c.RoomId == "" {
 		return errors.New("missing room id")
 	}
@@ -65,6 +75,9 @@ func (c *config) setFromVar(key, val string) error {
 	switch key {
 	case "HIPCHAT_USERNAME":
 		c.Username = val
+		return nil
+	case "HIPCHAT_PASSWORD":
+		c.Password = val
 		return nil
 	case "HIPCHAT_ROOM_ID":
 		c.RoomId = val
