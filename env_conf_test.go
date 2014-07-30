@@ -11,7 +11,7 @@ func TestConfFromEnv(t *testing.T) {
 	os.Setenv("HIPCHAT_FULL_NAME", "full_name")
 	os.Setenv("HIPCHAT_MENTION_NAME", "mention_name")
 
-	conf := confFromEnv()
+	conf := ConfFromEnv()
 
 	if conf.Username != "username" ||
 		conf.RoomId != "room_id" ||

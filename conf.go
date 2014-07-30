@@ -1,6 +1,9 @@
 package bot
 
-import "errors"
+import (
+	"errors"
+	"fmt"
+)
 
 type config struct {
 	Username    string
@@ -49,4 +52,23 @@ func (c *config) validate() error {
 	}
 
 	return nil
+}
+
+func (c *config) setFromVar(key, val string) error {
+	switch key {
+	case "HIPCHAT_USERNAME":
+		c.Username = val
+		return nil
+	case "HIPCHAT_ROOM_ID":
+		c.RoomId = val
+		return nil
+	case "HIPCHAT_FULL_NAME":
+		c.FullName = val
+		return nil
+	case "HIPCHAT_MENTION_NAME":
+		c.MentionName = val
+		return nil
+	default:
+		return fmt.Errorf("%s is not a valid variable", key)
+	}
 }

@@ -1,6 +1,7 @@
 package bot
 
 import (
+	"errors"
 	"strings"
 	"testing"
 )
@@ -39,7 +40,7 @@ func TestMergeConfig(t *testing.T) {
 	}
 }
 
-var perms = []struct {
+var confPerms = []struct {
 	c      config
 	prefix string
 }{
@@ -73,7 +74,7 @@ var perms = []struct {
 }
 
 func TestValidateConfig(t *testing.T) {
-	for _, p := range perms {
+	for _, p := range confPerms {
 		err := p.c.validate()
 
 		if err == nil {
@@ -96,5 +97,54 @@ func TestValidateConfig(t *testing.T) {
 	err := correct.validate()
 	if err != nil {
 		t.Errorf("failed to validate correct config")
+	}
+}
+
+var setFromVarPerms = []struct {
+	key string
+	err error
+	val string
+}{
+	{"HIPCHAT_USERNAME", nil, "foo"},
+	{"HIPCHAT_USERNAME", nil, "bar"},
+	{"HIPCHAT_ROOM_ID", nil, "foo"},
+	{"HIPCHAT_FULL_NAME", nil, "foo"},
+	{"HIPCHAT_MENTION_NAME", nil, "foo"},
+	{"FOOBAR", errors.New("FOOBAR is not a valid variable"), ""},
+}
+
+func TestSetFromVar(t *testing.T) {
+	c := &config{}
+
+	for _, tt := range setFromVarPerms {
+		err := c.setFromVar(tt.key, tt.val)
+
+		if tt.err != nil {
+			if err == nil {
+				t.Errorf("expected error '%s', but none found", tt.err)
+				continue
+			}
+
+			if err.Error() != tt.err.Error() {
+				t.Errorf("error messages don't match. expected %s, got %s",
+					tt.err.Error(), err.Error())
+				continue
+			}
+		} else {
+			switch tt.key {
+			case "HIPCHAT_USERNAME":
+				assertSame(t, c.Username, tt.val)
+				break
+			case "HIPCHAT_ROOM_ID":
+				assertSame(t, c.RoomId, tt.val)
+				break
+			case "HIPCHAT_FULL_NAME":
+				assertSame(t, c.FullName, tt.val)
+				break
+			case "HIPCHAT_MENTION_NAME":
+				assertSame(t, c.MentionName, tt.val)
+				break
+			}
+		}
 	}
 }

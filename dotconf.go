@@ -2,21 +2,22 @@ package bot
 
 import (
 	"io/ioutil"
-	"os"
 	"strings"
 )
 
-func parseDotEnv(s string) {
+func confFromDotConf(s string) *config {
+	c := &config{}
+
 	lines := strings.Split(s, "\n")
 
-	for i := 0; i < len(lines); i += 1 {
-		l := lines[i]
+	for _, l := range lines {
 		if len(l) < 1 || strings.HasPrefix(l, "#") {
 			continue
 		}
 
 		// split it on the first =
 		slices := strings.SplitN(l, "=", 2)
+		// if we don't have 2 segments someone messed up
 		if len(slices) < 2 {
 			continue
 		}
@@ -30,15 +31,17 @@ func parseDotEnv(s string) {
 			val = val[1 : len(val)-1]
 		}
 
-		os.Setenv(key, val)
+		c.setFromVar(key, val)
 	}
+
+	return c
 }
 
-func ParseDotEnvFile(dir string) {
-	data, err := ioutil.ReadFile(dir + "/.env")
+func ParseDotConfFile(dir string) (*config, error) {
+	data, err := ioutil.ReadFile(dir + "/.conf")
 	if err != nil {
-		return
+		return nil, err
 	}
 
-	parseDotEnv(string(data))
+	return confFromDotConf(string(data)), nil
 }

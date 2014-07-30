@@ -2,7 +2,7 @@ package bot
 
 import "os"
 
-func confFromEnv() config {
+func ConfFromEnv() config {
 	return config{
 		Username:    os.Getenv("HIPCHAT_USERNAME"),
 		RoomId:      os.Getenv("HIPCHAT_ROOM_ID"),
