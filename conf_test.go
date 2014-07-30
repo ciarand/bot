@@ -7,37 +7,33 @@ import (
 )
 
 func TestMergeConfig(t *testing.T) {
-	first := &config{
+	foo := &config{
 		Username:    "foo",
 		RoomId:      "0000000",
 		FullName:    "name1",
 		MentionName: "mentionname1",
 	}
 
-	second := &config{
+	bar := &config{
 		Username:    "bar",
 		RoomId:      "1111111",
 		FullName:    "name2",
 		MentionName: "mentionname2",
 	}
 
-	final := first.MergeWith(second)
+	final := foo.MergeWith(bar)
 
-	if final.Username != "bar" ||
-		final.RoomId != "1111111" ||
-		final.FullName != "name2" ||
-		final.MentionName != "mentionname2" {
-		t.Fail()
-	}
+	assertSame(t, final.Username, "bar")
+	assertSame(t, final.RoomId, "1111111")
+	assertSame(t, final.FullName, "name2")
+	assertSame(t, final.MentionName, "mentionname2")
 
-	ulti := final.MergeWith(first)
+	ulti := bar.MergeWith(foo)
 
-	if ulti.Username != "foo" ||
-		ulti.RoomId != "0000000" ||
-		ulti.FullName != "name1" ||
-		ulti.MentionName != "mentionname1" {
-		t.Fail()
-	}
+	assertSame(t, ulti.Username, "foo")
+	assertSame(t, ulti.RoomId, "0000000")
+	assertSame(t, ulti.FullName, "name1")
+	assertSame(t, ulti.MentionName, "mentionname1")
 }
 
 var confPerms = []struct {
