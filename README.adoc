@@ -6,7 +6,6 @@ A simple HipChat bot
 
 image:https://drone.io/github.com/ciarand/bot/status.png[
     "Build Status", link="https://drone.io/github.com/ciarand/bot/latest"]
-
 image:https://img.shields.io/coveralls/ciarand/bot.svg?style=flat[
     "Coverage status", link=https://coveralls.io/r/ciarand/bot?branch=master"]
 
