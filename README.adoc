@@ -28,6 +28,8 @@ Specifically it needs the connection:
 
 - Username (XMPP, not your regular HipChat username)
 
+- Password
+
 - Room ID (or "all" if that's your thing)
 
 - Full name (needs to be lowercase and *exactly* match your HipChat account settings)
@@ -110,6 +112,33 @@ func main() {
 }
 ----
 
+Plugins
+-------
+
+HttpOutputPlugin
+~~~~~~~~~~~~~~~~
+Returns a handler that returns the output of the provided URL.
+
+Planned
+~~~~~~~
+
+- Jira ticket retrieval
+- GitHub issue retrieval
+- BitBucket issue retrieval
+
+- GitHub data retrieval (branches, commits)
+- BitBucket data retrieval (branches, commits)
+- Gogs data retrieval (branches, commits)
+- GitLab data retrieval (branches, commits)
+
+- Automatic reconnection
+
+- Karma
+
+- Support for other chat providers (Slack, IRC)
+
+- Posting specific payloads to webhooks (build servers, deployments, etc.)
+- Site health monitoring
 
 License
 -------
