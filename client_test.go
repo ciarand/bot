@@ -30,14 +30,14 @@ func TestHandlers(t *testing.T) {
 
 	done := make(chan bool, 1)
 
-	handler := func(msg *Message, c *Client) {
+	handler := func(msg Message, c *Client) {
 		done <- true
 	}
 
 	re := regexp.MustCompile("roboto")
 
 	cli.RegisterHandler(re, handler)
-	cli.handleMessage(&Message{Body: "roboto zen"})
+	cli.handleMessage(&message{body: "roboto zen"})
 
 	select {
 	case <-done:
