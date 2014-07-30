@@ -4,7 +4,7 @@ import (
 	"flag"
 )
 
-func confFromFlags(args []string) *config {
+func ConfFromFlags(args []string) *config {
 	f := flag.NewFlagSet("config", flag.ContinueOnError)
 
 	usernameFlag := f.String("username", "", "the username to connect as")

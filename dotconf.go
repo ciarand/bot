@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-func confFromDotConf(s string) *config {
+func parseDotConf(s string) *config {
 	c := &config{}
 
 	lines := strings.Split(s, "\n")
@@ -37,11 +37,11 @@ func confFromDotConf(s string) *config {
 	return c
 }
 
-func ParseDotConfFile(dir string) (*config, error) {
+func ConfFromDotConf(dir string) *config {
 	data, err := ioutil.ReadFile(dir + "/.conf")
 	if err != nil {
-		return nil, err
+		return &config{}
 	}
 
-	return confFromDotConf(string(data)), nil
+	return parseDotConf(string(data))
 }

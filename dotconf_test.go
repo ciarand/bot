@@ -21,7 +21,7 @@ var dotconfPerms = []struct {
 
 func TestDotconfPerms(t *testing.T) {
 	for _, tt := range dotconfPerms {
-		c := confFromDotConf(tt.str)
+		c := parseDotConf(tt.str)
 
 		if c.Username != tt.expect {
 			t.Errorf(tt.msg)
@@ -31,16 +31,13 @@ func TestDotconfPerms(t *testing.T) {
 
 func TestSilentlyFailsIfNoFileExists(t *testing.T) {
 	// this shouldn't fail or do anything with errors or whatever
-	ParseDotConfFile("./dir_doesnt_exist")
+	ConfFromDotConf("./dir_doesnt_exist")
 }
 
 func TestParsesdotconfFileIfExists(t *testing.T) {
 	resetEnv("foo", "baz")
 
-	c, err := ParseDotConfFile("./fixtures")
-	if err != nil {
-		t.Fatalf(err.Error())
-	}
+	c := ConfFromDotConf("./fixtures")
 
 	assertSame(t, c.Username, "my cool name")
 	assertSame(t, c.MentionName, "nope not here#\"")

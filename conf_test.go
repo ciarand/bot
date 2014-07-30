@@ -7,21 +7,21 @@ import (
 )
 
 func TestMergeConfig(t *testing.T) {
-	first := config{
+	first := &config{
 		Username:    "foo",
 		RoomId:      "0000000",
 		FullName:    "name1",
 		MentionName: "mentionname1",
 	}
 
-	second := config{
+	second := &config{
 		Username:    "bar",
 		RoomId:      "1111111",
 		FullName:    "name2",
 		MentionName: "mentionname2",
 	}
 
-	final := first.mergeWith(second)
+	final := first.MergeWith(second)
 
 	if final.Username != "bar" ||
 		final.RoomId != "1111111" ||
@@ -30,7 +30,7 @@ func TestMergeConfig(t *testing.T) {
 		t.Fail()
 	}
 
-	ulti := final.mergeWith(first)
+	ulti := final.MergeWith(first)
 
 	if ulti.Username != "foo" ||
 		ulti.RoomId != "0000000" ||

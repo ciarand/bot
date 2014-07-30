@@ -10,7 +10,7 @@ func TestConfFromCliFlags(t *testing.T) {
 		"-mention_name", "mention_name",
 	}
 
-	conf := confFromFlags(args)
+	conf := ConfFromFlags(args)
 
 	if conf.Username != "username" ||
 		conf.RoomId != "room_id" ||

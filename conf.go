@@ -12,23 +12,25 @@ type config struct {
 	MentionName string
 }
 
-func (base config) mergeWith(diff config) config {
+func (base config) MergeWith(merges ...*config) config {
 	fin := base
 
-	if diff.Username != "" {
-		fin.Username = diff.Username
-	}
+	for _, diff := range merges {
+		if diff.Username != "" {
+			fin.Username = diff.Username
+		}
 
-	if diff.RoomId != "" {
-		fin.RoomId = diff.RoomId
-	}
+		if diff.RoomId != "" {
+			fin.RoomId = diff.RoomId
+		}
 
-	if diff.FullName != "" {
-		fin.FullName = diff.FullName
-	}
+		if diff.FullName != "" {
+			fin.FullName = diff.FullName
+		}
 
-	if diff.MentionName != "" {
-		fin.MentionName = diff.MentionName
+		if diff.MentionName != "" {
+			fin.MentionName = diff.MentionName
+		}
 	}
 
 	return fin
