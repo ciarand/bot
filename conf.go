@@ -73,19 +73,19 @@ func (c *config) validate() error {
 
 func (c *config) setFromVar(key, val string) error {
 	switch key {
-	case "HIPCHAT_USERNAME":
+	case "BOT_USERNAME":
 		c.Username = val
 		return nil
-	case "HIPCHAT_PASSWORD":
+	case "BOT_PASSWORD":
 		c.Password = val
 		return nil
-	case "HIPCHAT_ROOM_ID":
+	case "BOT_ROOM_ID":
 		c.RoomId = val
 		return nil
-	case "HIPCHAT_FULL_NAME":
+	case "BOT_FULL_NAME":
 		c.FullName = val
 		return nil
-	case "HIPCHAT_MENTION_NAME":
+	case "BOT_MENTION_NAME":
 		c.MentionName = val
 		return nil
 	default:

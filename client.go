@@ -61,7 +61,6 @@ func (c *Client) RegisterHandler(re *regexp.Regexp, h handler) {
 func (c *Client) handleMessage(m Message) {
 	for regex, fn := range c.handlers {
 		if regex.MatchString(m.Body()) {
-			log.Printf(`"%s" matched "%s"`, m.Body(), regex.String())
 			fn(m, c)
 			return
 		}

@@ -48,11 +48,11 @@ Using environmental variables
 You can configure the bot via environment variables. They look like this:
 
 ----
-HIPCHAT_USERNAME
-HIPCHAT_PASSWORD
-HIPCHAT_ROOM_ID
-HIPCHAT_FULL_NAME
-HIPCHAT_MENTION_NAME
+BOT_USERNAME
+BOT_PASSWORD
+BOT_ROOM_ID
+BOT_FULL_NAME
+BOT_MENTION_NAME
 ----
 
 Using a .conf file
@@ -61,11 +61,11 @@ To help you in making the configuration easier the bot parses and interprets
 a `.conf` file that looks like a very simple shell env file:
 
 ----
-HIPCHAT_USERNAME=00000_0000000
-HIPCHAT_PASSWORD=super secret
-HIPCHAT_ROOM_ID=00000_my_cool_room@conf.hipchat.com
-HIPCHAT_FULL_NAME=mr roboto
-HIPCHAT_MENTION_NAME=roboto
+BOT_USERNAME=00000_0000000
+BOT_PASSWORD=super secret
+BOT_ROOM_ID=00000_my_cool_room@conf.hipchat.com
+BOT_FULL_NAME=mr roboto
+BOT_MENTION_NAME=roboto
 ----
 
 Using command line params

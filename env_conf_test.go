@@ -6,10 +6,10 @@ import (
 )
 
 func TestConfFromEnv(t *testing.T) {
-	os.Setenv("HIPCHAT_USERNAME", "username")
-	os.Setenv("HIPCHAT_ROOM_ID", "room_id")
-	os.Setenv("HIPCHAT_FULL_NAME", "full_name")
-	os.Setenv("HIPCHAT_MENTION_NAME", "mention_name")
+	os.Setenv("BOT_USERNAME", "username")
+	os.Setenv("BOT_ROOM_ID", "room_id")
+	os.Setenv("BOT_FULL_NAME", "full_name")
+	os.Setenv("BOT_MENTION_NAME", "mention_name")
 
 	conf := ConfFromEnv()
 

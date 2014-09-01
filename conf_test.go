@@ -115,12 +115,12 @@ var setFromVarPerms = []struct {
 	err error
 	val string
 }{
-	{"HIPCHAT_USERNAME", nil, "foo"},
-	{"HIPCHAT_USERNAME", nil, "bar"},
-	{"HIPCHAT_PASSWORD", nil, "foo"},
-	{"HIPCHAT_ROOM_ID", nil, "foo"},
-	{"HIPCHAT_FULL_NAME", nil, "foo"},
-	{"HIPCHAT_MENTION_NAME", nil, "foo"},
+	{"BOT_USERNAME", nil, "foo"},
+	{"BOT_USERNAME", nil, "bar"},
+	{"BOT_PASSWORD", nil, "foo"},
+	{"BOT_ROOM_ID", nil, "foo"},
+	{"BOT_FULL_NAME", nil, "foo"},
+	{"BOT_MENTION_NAME", nil, "foo"},
 	{"FOOBAR", errors.New("FOOBAR is not a valid variable"), ""},
 }
 
@@ -143,19 +143,19 @@ func TestSetFromVar(t *testing.T) {
 			}
 		} else {
 			switch tt.key {
-			case "HIPCHAT_USERNAME":
+			case "BOT_USERNAME":
 				assertSame(t, c.Username, tt.val)
 				break
-			case "HIPCHAT_PASSWORD":
+			case "BOT_PASSWORD":
 				assertSame(t, c.Password, tt.val)
 				break
-			case "HIPCHAT_ROOM_ID":
+			case "BOT_ROOM_ID":
 				assertSame(t, c.RoomId, tt.val)
 				break
-			case "HIPCHAT_FULL_NAME":
+			case "BOT_FULL_NAME":
 				assertSame(t, c.FullName, tt.val)
 				break
-			case "HIPCHAT_MENTION_NAME":
+			case "BOT_MENTION_NAME":
 				assertSame(t, c.MentionName, tt.val)
 				break
 			}
