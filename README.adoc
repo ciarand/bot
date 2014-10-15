@@ -6,7 +6,7 @@ A chat bot
 
 image:https://drone.io/github.com/ciarand/bot/status.png[
     "Build Status", link="https://drone.io/github.com/ciarand/bot/latest"]
-image:https://img.shields.io/coveralls/ciarand/bot.svg?style=flat[
+image:https://img.shields.io/coveralls/ciarand/bot.svg?style=flat-square[
     "Coverage status", link=https://coveralls.io/r/ciarand/bot?branch=master"]
 
 What does it do?
