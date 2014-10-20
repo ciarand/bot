@@ -2,147 +2,21 @@ bot
 ===
 
 [quote]
-A chat bot
-
-image:https://drone.io/github.com/ciarand/bot/status.png[
-    "Build Status", link="https://drone.io/github.com/ciarand/bot/latest"]
-image:https://img.shields.io/coveralls/ciarand/bot.svg?style=flat-square[
-    "Coverage status", link=https://coveralls.io/r/ciarand/bot?branch=master"]
-
-What does it do?
-----------------
-Very little right now. It can connect to HipChat via XMPP and handle incoming
-messages using the Go stdlib's regexp package for matching. An
-`HttpOutputPlugin` that sends the output of a GET request to the provided URL
-is currently available.
-
-What will it do?
-----------------
-Lots of cool stuff! See the planned features below.
-
-Getting started
----------------
-
-Configuration
-~~~~~~~~~~~~~
-The bot requires a certain amount of basic configuration.
-
-Specifically it needs the connection:
-
-- Username (XMPP, not your regular HipChat username)
-
-- Password
-
-- Room ID (or "all" if that's your thing)
-
-- Full name (needs to be lowercase and *exactly* match your HipChat account settings)
-
-- Mention name
-
-[NOTE]
-The mention name doesn't have to match what HipChat thinks it is. But, since the
-client provides mention-completion, it's probably a good idea.
-
-Using environmental variables
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-You can configure the bot via environment variables. They look like this:
-
-----
-BOT_USERNAME
-BOT_PASSWORD
-BOT_ROOM_ID
-BOT_FULL_NAME
-BOT_MENTION_NAME
-----
-
-Using a .conf file
-^^^^^^^^^^^^^^^^^^
-To help you in making the configuration easier the bot parses and interprets
-a `.conf` file that looks like a very simple shell env file:
-
-----
-BOT_USERNAME=00000_0000000
-BOT_PASSWORD=super secret
-BOT_ROOM_ID=00000_my_cool_room@conf.hipchat.com
-BOT_FULL_NAME=mr roboto
-BOT_MENTION_NAME=roboto
-----
-
-Using command line params
-^^^^^^^^^^^^^^^^^^^^^^^^^
-You can also specify these via command line parameters. Something like this
-should work:
-
-----
-bot -username 00000_0000000 \
-    -password "super sekrit" \
-    -room 00000_my_cool_room@conf.hipchat.com \
-    -full_name "mr roboto" \
-    -mention_name "roboto"
-----
-
-Usage
------
-For now something like this will work:
-
-[source,go]
-.bot.go
-----
-package main
-
-import (
-	"flag"
-	"log"
-	"regexp"
-
-	"github.com/ciarand/bot"
-)
-
-func main() {
-	c := bot.NewClient(bot.ConfFromDotConf(".").MergeWith(
-		bot.ConfFromEnv(),
-		bot.ConfFromFlags(flag.Args()),
-	))
-
-	c.RegisterHandler(regexp.MustCompile("^zen$"),
-		bot.HttpOutputPlugin("https://api.github.com/zen"))
-
-	if err := c.Connect(); err != nil {
-		log.Fatalf("Couldn't connect to HipChat server:", err)
-	}
-
-	log.Fatal(c.Run())
-}
-----
-
-Plugins
--------
-
-HttpOutputPlugin
-~~~~~~~~~~~~~~~~
-Returns a handler that returns the output of the provided URL.
-
-Planned
-~~~~~~~
-
-- Jira ticket retrieval
-- GitHub issue retrieval
-- BitBucket issue retrieval
-
-- GitHub data retrieval (branches, commits)
-- BitBucket data retrieval (branches, commits)
-- Gogs data retrieval (branches, commits)
-- GitLab data retrieval (branches, commits)
-
-- Automatic reconnection
-
-- Karma
-
-- Support for other chat providers (Slack, IRC)
-
-- Posting specific payloads to webhooks (build servers, deployments, etc.)
-- Site health monitoring
+An experiment in bot stuff
 
 License
 -------
-BSD, see the `LICENSE` file if you're into that sort of thing.
+Copyright (c) 2014, Ciaran Downey <code@ciarand.me>
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
