@@ -1,8 +1,11 @@
 bot
 ===
 
+image:http://drone.restless.co/api/badge/github.com/ciarand/bot/status.svg?branch=master[
+    "Build status", link=http://drone.restless.co/github.com/ciarand/bot]
+
 [quote]
-An experiment in bot stuff
+An experiment in chatbot stuff
 
 License
 -------
