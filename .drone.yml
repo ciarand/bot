@@ -9,4 +9,4 @@ env:
 
 script:
   - go get ./...
-  - make test
+  - make
