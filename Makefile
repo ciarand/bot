@@ -1,5 +1,5 @@
 quicktest:
-	go test -v ./...
+	go test -cover -v ./...
 
 test:
 	./bin/test
