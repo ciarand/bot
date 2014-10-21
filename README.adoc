@@ -54,7 +54,8 @@ message. Luckily, we can wrap it:
 [source,go]
 ----
 orig := GifProducer{URL: "http://giphy.com/posts/evil-laugh-of-the-day-12"}
-wrapped, _ := bot.RegexMatcher("/bot gif me/", orig)
+
+wrapped := bot.RegexMatcher(regexp.MustCompile("/bot gif me/"), orig)
 ----
 
 `RegexMatcher` looks like this:
@@ -66,7 +67,7 @@ type RegexMatcher {
     re *regexp.Regexp
 }
 
-func NewRegexMatcher(re *regexp.Regexp, next bot.Hook) (*RegexMatcher, error) {
+func NewRegexMatcher(re *regexp.Regexp, next bot.Hook) *RegexMatcher {
     return &RegexMatcher{next: next, re: re}
 }
 
