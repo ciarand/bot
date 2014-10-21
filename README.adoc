@@ -1,11 +1,85 @@
 bot
 ===
+:source-highlighter: pygments
 
 image:http://drone.restless.co/api/badge/github.com/ciarand/bot/status.svg?branch=master[
     "Build status", link=http://drone.restless.co/github.com/ciarand/bot]
 
 [quote]
-An experiment in chatbot stuff
+An experiment in chatbot stuff.
+
+INFO: this is totally not anywhere near as polished or complete as the text
+below would have you believe. Don't even think about using this for anything
+remotely close to a production environment. Seriously.
+
+Architecture
+------------
+There are a couple of components:
+
+Contexts::
+Represents a container for chat messages. The exact meaning varies between
+providers, but it's often a (public or private) chat room.
+
+Hooks::
+Hooks are essentially tasks that run when certain events happen. In actual-code
+they're just structs that implement the `RunHook(bot.Bot, bot.Context)`
+interface.
+
+Bot::
+A container for hooks and contexts.
+
+Wrapper::
+A struct that implements the `RunHook` function and "wraps" another hook. This
+allows you to easily combine pieces to finetune your hooks.
+
+Wrapper guide
+-------------
+Let's say we have a super innovative GIF producer hook:
+
+[source,go]
+----
+type GifProducer struct {
+    URL string
+}
+
+func (g GifProducer) RunHook(b bot.Bot, ctx bot.Context) {
+    ctx.Send(g.URL)
+}
+----
+
+Well I don't want to repeat all this complicated code every time I need
+slightly different gif behaviors, and I also don't want it to run for every
+message. Luckily, we can wrap it:
+
+[source,go]
+----
+orig := GifProducer{URL: "http://giphy.com/posts/evil-laugh-of-the-day-12"}
+wrapped, _ := bot.RegexMatcher("/bot gif me/", orig)
+----
+
+`RegexMatcher` looks like this:
+
+[source,go]
+----
+type RegexMatcher {
+    next bot.Hook
+    re *regexp.Regexp
+}
+
+func NewRegexMatcher(re *regexp.Regexp, next bot.Hook) (*RegexMatcher, error) {
+    return &RegexMatcher{next: next, re: re}
+}
+
+func (r *RegexMatcher) RunHook(b bot.Bot, ctx bot.Context) {
+    // if it matches, call the next (wrapped) hook
+    if r.re.MatchString(ctx.Message) {
+        r.next(b, ctx)
+    }
+}
+----
+
+There's a couple of other helpful hook wrappers. Check the
+http://www.example.com[godoc].
 
 License
 -------
