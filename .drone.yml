@@ -9,4 +9,7 @@ env:
 
 script:
   - go get ./...
-  - make
+  - go get github.com/bradfitz/goimports
+  - go get github.com/golang/lint
+  - go get code.google.com/p/go.tools/cmd/vet
+  - make test
