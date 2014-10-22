@@ -2,7 +2,8 @@ package bot
 
 // Context is essentially a single chat room
 type Context interface {
-	Reply(Message)
+	Send(Message)
+	Recv() Message
 }
 
 // Message is the embodiment of a chat event
@@ -31,5 +32,5 @@ type Source interface {
 	String() string
 
 	// Gets an identifier string for the Source
-	Id() string
+	ID() string
 }
